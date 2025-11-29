@@ -1,220 +1,87 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Smart Online Food Ordering & Delivery system</title>
-    <!-- StyleSheets -->
-    <link rel="stylesheet" href="./css/styles.css" />
-  </head>
-  <body>
-    
-    <!-- Preloader -->
-     <div class="preloader">
-      <img src="./images/preloader.gif" alt="" />
-    </div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Smart Food — Home</title>
+  <link rel="stylesheet" href="./style.css">
+  <script src="./js/main.js" defer></script>
+</head>
+<body>
+  <!-- Navbar will be injected here -->
+  <div id="navbar"></div>
 
-      <nav class="navbar">
-        <a href="#home">Home</a>
-        <a href="#services">Services</a>
-        <a href="#about">About Us</a>
-        <a href="#contact">Contact Us</a>
-        <a href="" class="btn">Make an Order</a>
-      </nav>
-
-
-<!-- Hamburger -->
-      <div class="hamburger">
-        <img src="./images/grid-outline.svg" alt="" />
-      </div>
-
-
-    <!-- Header -->
-     <header class="header">
-      <a href="/" class="logo">Food<span class="yellow">Delivery</span></a>
-</header>
-
-    <!-- Home -->
-     <section class="home" id="home">
-      <div class="content">
-        <h1>Order Your Product <span class="yellow">Easier & Faster.</span></h1>
+  <main>
+    <section class="hero container" id="home">
+      <div class="hero-text">
+        <h1>Delicious meals — ordered <strong>faster</strong>, delivered <strong>hot</strong>.</h1>
         <p>
-          Delivero is a leading global online food delivery marketplace,
-          connecting consumers and restaurants through its platform in 24
-          countries.
+          Order from multiple restaurants, track delivery in real time, and pay securely.
+          Designed for Nepal with local payment options.
         </p>
-        <a href="#" class="home-btn">Go to Menu</a>
-      </div>
-      <div class="image">
-        <img src="./images/Delivery address.svg" alt="" />
-      </div>
-    </section>
-<section class="services" id="services">
-      <div class="top">
-        <h2><span class="yellow">Why</span> We are the Best</h2>
-        <p>
-          Lorem ipsum is placeholder text commonly used in the graphic, print,
-          and publishing industries for previewing layouts and visual mockups.
-          Lorem ipsum is placeholder.
-        </p>
-      </div>
 
-      <div class="bottom">
-        <div class="box">
-          <img src="./images/delivery-man.svg" alt="" />
-          <h4>Free Delivery</h4>
-          <p>
-            Lorem ipsum dolor sit amet,adipiscing elit. Eu, montes, metus
-            porttitor consectetur pretium. Euismod imperdiet pellentesque cursus
-            in netus.
-          </p>
-          <a href="#">View More <img src="./images/btn-arrow.svg" alt="" /> </a>
-        </div>
-        <div class="box">
-          <img src="./images/fast-food.svg" alt="" />
-          <h4>Healthy Foods</h4>
-          <p>
-            Lorem ipsum dolor sit amet,adipiscing elit. Eu, montes, metus
-            porttitor consectetur pretium. Euismod imperdiet pellentesque cursus
-            in netus.
-          </p>
-          <a href="#">View More <img src="./images/btn-arrow.svg" alt="" /> </a>
-        </div>
-        <div class="box">
-          <img src="./images/order-food.svg" alt="" />
-          <h4>Online Ordering</h4>
-          <p>
-            Lorem ipsum dolor sit amet,adipiscing elit. Eu, montes, metus
-            porttitor consectetur pretium. Euismod imperdiet pellentesque cursus
-            in netus.
-          </p>
-          <a href="#">View More <img src="./images/btn-arrow.svg" alt="" /> </a>
+        <div class="actions">
+          <a class="btn primary" href="#order">Order Now</a>
+          <a class="outline-btn" href="#services">Explore Services</a>
         </div>
       </div>
-    </section>
 
-    <!-- Services -->
-<section class="about" id="about">
-      <div class="image">
-        <img src="./images/illus riding.svg" alt="" />
-      </div>
-      <div class="content">
-        <h3><span class="yellow">Order</span> anytime and anywhere</h3>
-        <p>
-          Lorem ipsum dolor sit amet,adipiscing elit. Eu, montes, metus
-          porttitor consectetur pretium. Euismod imperdiet pellentesque cursus
-          in netus.
-        </p>
-        <a href="#" class="btn">Make an Offer</a>
+      <div class="hero-image">
+        <img src="assets/hero-illustration.png" class="hero-illustration" alt="Delivery illustration" loading="lazy">
       </div>
     </section>
 
-    <!-- About #1 -->
-   <section class="about about-2">
-      <div class="content">
-        <h3>
-          <span class="yellow">Deliver</span> the products with best safety
-        </h3>
-        <p>
-          Lorem ipsum dolor sit amet,adipiscing elit. Eu, montes, metus
-          porttitor consectetur pretium. Euismod imperdiet pellentesque cursus
-          in netus.
-        </p>
-        <a href="#" class="btn">Make an Offer</a>
-      </div>
+    <section id="services" class="container services-section">
+      <h2>Our Services</h2>
 
-      <div class="image">
-        <img src="./images/illus deliver.svg" alt="" />
-      </div>
-    </section>
+      <div class="services-grid">
+        <article class="service">
+          <img src="assets/online-ordering.png" alt="Online Ordering" width="90">
+          <h3>Online Ordering</h3>
+          <p>Browse menus, add items to your cart, and check out securely.</p>
+        </article>
 
-    <!-- About #2 -->
-<section class="about about-3" style="gap: 3rem 13rem">
-      <div class="image">
-        <img src="./images/buying online.svg" alt="" />
-      </div>
+        <article class="service">
+          <img src="assets/fast-delivery.png" alt="Fast Delivery" width="90">
+          <h3>Fast Delivery</h3>
+          <p>Optimized routing and live GPS tracking ensure fast and hot orders.</p>
+        </article>
 
-      <div class="content">
-        <h3><span class="yellow">Track</span> your order very easily</h3>
-        <p>
-          Lorem ipsum dolor sit amet,adipiscing elit. Eu, montes, metus
-          porttitor consectetur pretium. Euismod imperdiet pellentesque cursus
-          in netus.
-        </p>
-        <a href="#" class="btn">Track Now</a>
+        <article class="service">
+          <img src="assets/bulk-ordering.png" alt="Bulk Orders" width="90">
+          <h3>Bulk Orders</h3>
+          <p>Perfect for parties, events, and large group meals with special pricing.</p>
+        </article>
       </div>
     </section>
 
-    <!-- About #3 -->
+    <section id="order" class="container order-section">
+      <h2>Order Your Favorite Food</h2>
+      <p>Coming soon — deliciousness on the way! 😋</p>
+    </section>
 
-    <!-- App -->
+    <section id="about" class="container about-section">
+      <div class="about-wrap">
+        <div class="about-image">
+          <img src="assets/about-illus.png" alt="Plate of food on wooden table" loading="lazy" decoding="async">
+        </div>
 
-    <!-- Footer -->
-<footer class="footer">
-      <div class="top">
-        <div class="content">
-          <a href="" class="logo">Delive<span class="yellow">roo</span></a>
+        <div class="about-text">
+          <h2>About Smart Food</h2>
           <p>
-            Lorem ipsum dolor sit amet,adipiscing elit. Eu, montes, metus
-            porttitor consectetur pretium. Euismod imperdiet
+            We connect local restaurants with hungry customers across Nepal.
+            Fast, lightweight, and built for performance and scale.
+          </p>
+          <p>
+            <a href="./components/contact/contact.html" class="btn">Contact Us</a>
           </p>
         </div>
-
-        <div class="links">
-          <div class="link">
-            <h4>Contact Information</h4>
-            <div>
-              <img src="./images/location-cross.svg" alt="" />
-              <span>122,Albert St, Port Melbourne,Vic 3207.</span>
-            </div>
-            <div>
-              <img src="./images/sms-tracking.svg" alt="" />
-              <span>deliveroo@gmail.com</span>
-            </div>
-          </div>
-
-          <div class="link">
-            <h4>Quick Links</h4>
-            <a href="#">Services</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
-            <a href="#">Download</a>
-          </div>
-
-          <div class="link">
-            <h4>Legal</h4>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Term of Use</a>
-            <a href="#">Conditions</a>
-            <a href="#">Location</a>
-          </div>
-
-          <div class="link">
-            <h4>Connect with Us</h4>
-            <div>
-              <img src="./images/instagram.svg" alt="" />
-              <span>Instagram</span>
-            </div>
-            <div>
-              <img src="./images/twitter.svg" alt="" />
-              <span>Twitter</span>
-            </div>
-            <div>
-              <img src="./images/facebook.svg" alt="" />
-              <span>Facebook</span>
-            </div>
-          </div>
-        </div>
       </div>
-      <div class="bottom">
-        <p>Copyright © 2010-2022 Deliveroo Company S.L. All rights reserved.</p>
-      </div>
-    </footer>
+    </section>
+  </main>
 
-    <!-- Go To Top -->
-
-    <!-- Scripts -->
-    <script src="./js/main.js"></script>
-  </body>
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Smart Food — All rights reserved.</p>
+  </footer>
+</body>
 </html>

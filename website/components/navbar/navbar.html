@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Food</title>
+
+  <!-- VERY IMPORTANT: make sure path is correct -->
+  <link rel="stylesheet" href="navbar.css">
+
+  <script defer>
+    // hamburger toggle script
+    document.addEventListener("DOMContentLoaded", () => {
+      const btn = document.getElementById("hamburgerBtn");
+      const nav = document.getElementById("mainNav");
+
+      btn.addEventListener("click", () => {
+        nav.classList.toggle("open");
+      });
+
+      document.addEventListener("click", (e) => {
+        if (!btn.contains(e.target) && !nav.contains(e.target)) {
+          nav.classList.remove("open");
+        }
+      });
+    });
+  </script>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="site-bar container">
+
+      <a href="index.html" class="logo">
+        <img src="/website/assets/logo.png" class="logo-img" alt="Smart Food Logo">
+        <span>Smart<span class="brand-color">Food</span></span>
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <a href="index.html">Home</a>
+        <a href="index.html#services">Services</a>
+        <a href="restaurants.html">Restaurants</a>
+        <a href="contact.html">Contact</a>
+        <a href="index.html#about">About</a>
+        <a href="login.html" class="btn-nav">Login</a>
+      </nav>
+
+      <button id="hamburgerBtn" class="hamburger">☰</button>
+    </div>
+  </header>
+
+
+</body>
+</html>

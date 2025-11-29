@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Dashboard — Smart Food</title>
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="../../js/main.js" defer></script>
+  <script src="../../js/app-pages.js" defer></script>
+</head>
+
+<body class="app-page">
+
+  <div id="navbar"></div>
+
+  <main class="container dashboard-container">
+
+    <aside class="dashboard-side">
+      <div class="card profile-summary">
+        <img src="../../assets/images/logo.png" alt="avatar" class="avatar">
+        <h3 id="userName">Hello, Guest</h3>
+        <p id="userEmail">guest@example.com</p>
+
+        <nav class="side-nav">
+          <a href="../dashboard/dashboard.html" class="active">Overview</a>
+          <a href="../profile/profile.html">Account</a>
+          <a href="../restaurants/restaurants.html">Order Food</a>
+          <a href="../contact/contact.html">Support</a>
+        </nav>
+      </div>
+    </aside>
+
+    <section class="dashboard-main">
+      <h2>Overview</h2>
+
+      <div class="stats-grid">
+        <div class="stat card">
+          <h4>Active Orders</h4>
+          <p id="statOrders">0</p>
+        </div>
+
+        <div class="stat card">
+          <h4>Past Orders</h4>
+          <p id="statPast">0</p>
+        </div>
+
+        <div class="stat card">
+          <h4>Saved Restaurants</h4>
+          <p id="statSaved">0</p>
+        </div>
+      </div>
+
+      <div class="recent-orders card">
+        <h3>Recent Orders</h3>
+        <div id="recentList">
+          <p class="muted">You have no recent orders (demo).</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Smart Food — All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

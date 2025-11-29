@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Login — Smart Food</title>
+  <link rel="stylesheet" href="login.css">
+  <script src="../../js/main.js" defer></script>
+  <script src="../../js/app-pages.js" defer></script>
+</head>
+
+<body class="login-page">
+
+  <div id="navbar"></div>
+
+  <main class="login-main container">
+    <section class="login-card" aria-labelledby="loginTitle">
+      <h1 id="loginTitle">Sign in to Smart Food</h1>
+
+      <form id="loginForm" class="form" novalidate>
+        <label for="identifier">Email or Phone</label>
+        <input id="identifier" name="identifier" type="text"
+               placeholder="you@example.com or +977-98XXXXXXXX" required>
+
+        <label for="password">Password</label>
+        <div class="pw-wrap">
+          <input id="password" name="password" type="password"
+                 placeholder="••••••••" required minlength="6">
+          <button id="togglePassword" type="button" class="toggle-pw" aria-label="Show password">Show</button>
+        </div>
+
+        <div class="form-row horizontal">
+          <label class="checkbox-label">
+            <input type="checkbox" id="remember" name="remember"> Remember me
+          </label>
+          <a class="forgot" href="../forget/forget.html">Forgot?</a>
+        </div>
+
+        <button type="submit" class="btn primary full">Sign In</button>
+
+        <p class="signup-cta">
+          Don't have an account?
+          <a href="../signup/signup.html">Sign up</a>
+        </p>
+
+        <div id="formMessage" aria-live="polite" class="form-message" hidden></div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer login-footer">
+    <p>© <span id="year"></span> Smart Food — All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const toggleBtn = document.getElementById("togglePassword");
+    const pwField = document.getElementById("password");
+
+    if (toggleBtn && pwField) {
+      toggleBtn.addEventListener("click", () => {
+        pwField.type = pwField.type === "password" ? "text" : "password";
+        toggleBtn.textContent = pwField.type === "password" ? "Show" : "Hide";
+      });
+    }
+  </script>
+
+</body>
+</html>

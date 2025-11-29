@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Forgot Password — Smart Food</title>
+  <link rel="stylesheet" href="forgot.css">
+  <script src="../../js/main.js" defer></script>
+  <script src="../../js/app-pages.js" defer></script>
+</head>
+
+<body class="auth-page">
+
+  <div id="navbar"></div>
+
+  <main class="container" style="padding:2rem 0">
+    <section class="card" style="max-width:480px;margin:0 auto;padding:1.5rem">
+
+      <h2>Reset Password</h2>
+      <p class="muted">Enter your email or phone. We will send a reset link (demo).</p>
+
+      <form id="forgotForm" novalidate>
+        <label for="fp">Email or Phone</label>
+        <input id="fp" name="fp" placeholder="you@example.com or +977-98XXXXXXXX" required>
+
+        <div style="margin-top:1rem">
+          <button class="btn primary" type="submit">Send Reset Link</button>
+        </div>
+
+        <div id="forgotMsg" style="margin-top:1rem"></div>
+      </form>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Smart Food — All rights reserved.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>

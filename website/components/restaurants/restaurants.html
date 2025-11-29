@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Restaurants — Smart Food</title>
+  <link rel="stylesheet" href="restaurants.css">
+  <script src="../../js/main.js" defer></script>
+  <script src="../../js/app-pages.js" defer></script>
+</head>
+
+<body>
+
+  <div id="navbar"></div>
+
+  <main class="container" style="padding:2rem 0">
+    <h2>Restaurants</h2>
+
+    <div class="filters">
+      <input id="search" placeholder="Search restaurants or cuisine">
+      <select id="cuisine">
+        <option value="">All cuisines</option>
+        <option>Asian</option>
+        <option>Fast Food</option>
+        <option>Italian</option>
+      </select>
+    </div>
+
+    <div class="grid" id="restaurantsList"></div>
+  </main>
+
+  <footer class="site-footer">
+  <p>© <span id="year"></span> Smart Food — All rights reserved.</p>
+</footer>
+
+  <script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+
+</body>
+</html>
