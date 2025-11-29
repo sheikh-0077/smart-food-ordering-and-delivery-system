@@ -1,10 +1,6 @@
-// main.js — Navbar loader + normalizer for pages in website/components/
-// ---------------------------------------------------------------------
-
-/* =========================
-   Helpers: messages & validators
-   ========================= */
-
+// Robust navbar loader + helpers
+// --------------------------------------------------
+// Utility: show/clear messages (kept for compatibility)
 function showMessage(targetEl, msg, type = "info") {
   if (!targetEl) return;
   targetEl.style.display = "block";
@@ -12,7 +8,6 @@ function showMessage(targetEl, msg, type = "info") {
   targetEl.style.marginTop = "0.6rem";
   targetEl.style.borderRadius = "8px";
   targetEl.style.fontWeight = "600";
-
   if (type === "error") {
     targetEl.style.background = "#f8d7da";
     targetEl.style.color = "#842029";
@@ -23,96 +18,217 @@ function showMessage(targetEl, msg, type = "info") {
     targetEl.style.background = "#e7eaf0";
     targetEl.style.color = "#333";
   }
-
   targetEl.textContent = msg;
 }
-
 function clearMessage(targetEl) {
   if (!targetEl) return;
   targetEl.style.display = "none";
   targetEl.textContent = "";
 }
-
 function validateEmail(email) {
   return /\S+@\S+\.\S+/.test(email);
 }
-
 function validatePhone(phone) {
   return /^\+?[0-9\-\s]{7,15}$/.test(phone);
 }
 
-/* =========================
-   Compute base (tries to detect '/website' in URL)
-   If your dev server exposes the site under '/website', we use that.
-   Otherwise base becomes '' (relative root).
-   ========================= */
+// computeBase and relative prefix helpers (kept to support your link normalization logic)
 function computeBase() {
-  // If pathname has '/website' segment, use '/website' as base (keeps absolute rewrites predictable)
   const parts = window.location.pathname.split('/').filter(Boolean);
   const idx = parts.indexOf('website');
-  if (idx !== -1) {
-    return '/' + parts.slice(0, idx + 1).join('/');
-  }
-  // fallback: empty string -> keep relative paths (useful for file:// or different servers)
+  if (idx !== -1) return '/' + parts.slice(0, idx + 1).join('/');
   return '';
 }
-
-/* =========================
-   getNavbarPath() — deterministic path using computed base
-   ========================= */
-function getNavbarPath() {
-  const base = computeBase(); // e.g. '/website' or ''
-  // navbar lives at /website/components/navbar.html or ./components/navbar.html (when base === '')
-  return base ? `${base}/components/navbar.html` : './components/navbar.html';
+function computeRelativePrefixes() {
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  const compIdx = parts.indexOf('components');
+  const toWebsiteRoot = './';
+  const toComponentsRoot = './components/';
+  if (compIdx === -1) return { toWebsiteRoot, toComponentsRoot };
+  const depthAfterComponents = parts.length - compIdx;
+  const upsToComponentsRoot = Math.max(0, depthAfterComponents - 2);
+  const upsToWebsiteRoot = Math.max(0, depthAfterComponents - 1);
+  return {
+    toWebsiteRoot: '../'.repeat(upsToWebsiteRoot) || './',
+    toComponentsRoot: '../'.repeat(upsToComponentsRoot) + 'components/'
+  };
 }
 
-/* =========================
-   DOMContentLoaded bootstrap
-   ========================= */
-window.addEventListener('DOMContentLoaded', () => {
-  const navbarContainer = document.getElementById('navbar');
-  const navbarPath = getNavbarPath();
+// normalizeNavbarLinksToComponents: adjusts anchor hrefs inside injected navbar so they point to component pages
+function normalizeNavbarLinksToComponents() {
+  const navbar = document.getElementById('navbar');
+  if (!navbar) return;
+  const anchors = navbar.querySelectorAll('a[href]');
+  if (!anchors.length) return;
+  const base = computeBase();
+  const prefixes = computeRelativePrefixes();
+  const pageFiles = new Set(['login.html','signup.html','menu.html','profile.html','restaurants.html','contact.html','forget.html','dashboard.html']);
+  anchors.forEach(a => {
+    const rawHref = (a.getAttribute('href') || '').trim();
+    if (!rawHref) return;
+    if (/^(https?:\/\/|mailto:|tel:|#)/i.test(rawHref)) return;
+    if (/^[a-zA-Z]:\\/.test(rawHref)) return;
+    const q = rawHref.indexOf('?');
+    const h = rawHref.indexOf('#');
+    let splitAt = -1;
+    if (q !== -1 && h !== -1) splitAt = Math.min(q, h);
+    else splitAt = Math.max(q, h);
+    const hrefWithoutExtras = splitAt === -1 ? rawHref : rawHref.slice(0, splitAt);
+    const extras = splitAt === -1 ? '' : rawHref.slice(splitAt);
+    let cleaned = hrefWithoutExtras.replace(/^\.?\//, '').replace(/^\/+/, '');
+    if (!cleaned || cleaned === 'index' || cleaned === 'index.html') {
+      a.setAttribute('href', base ? `${base}/index.html${extras}` : `${prefixes.toWebsiteRoot}index.html${extras}`);
+      return;
+    }
+    const parts = cleaned.split('/');
+    const basename = parts[parts.length - 1].toLowerCase();
+    if (pageFiles.has(basename) || pageFiles.has(basename.replace('.html',''))) {
+      const name = basename.endsWith('.html') ? basename : basename + '.html';
+      const folder = name.replace('.html', '');
+      if (base) {
+        a.setAttribute('href', `${base}/components/${folder}/${name}${extras}`);
+      } else {
+        const pathParts = window.location.pathname.split('/').filter(Boolean);
+        const compIdxNow = pathParts.indexOf('components');
+        if (compIdxNow === -1) {
+          a.setAttribute('href', `${prefixes.toComponentsRoot}${folder}/${name}${extras}`);
+        } else {
+          const depthAfterComponents = pathParts.length - compIdxNow;
+          const ups = Math.max(0, depthAfterComponents - 2);
+          a.setAttribute('href', `${'../'.repeat(ups)}${folder}/${name}${extras}`);
+        }
+      }
+      return;
+    }
+    if (base) {
+      a.setAttribute('href', `${base}/${cleaned}${extras}`);
+    } else {
+      const pathParts = window.location.pathname.split('/').filter(Boolean);
+      const compIdxNow = pathParts.indexOf('components');
+      if (compIdxNow === -1) {
+        a.setAttribute('href', `${prefixes.toWebsiteRoot}${cleaned}${extras}`);
+      } else {
+        const depthAfterComponents = pathParts.length - compIdxNow;
+        const ups = Math.max(0, depthAfterComponents - 1);
+        a.setAttribute('href', `${'../'.repeat(ups)}${cleaned}${extras}`);
+      }
+    }
+  });
+}
 
-  if (navbarContainer) {
-    fetch(navbarPath)
-      .then(res => {
-        if (!res.ok) throw new Error(`Navbar not found at ${navbarPath} (status ${res.status})`);
-        return res.text();
-      })
-      .then(html => {
-        navbarContainer.innerHTML = html;
-        initNavbarFunctions();
-        // normalize links after navbar is injected
-        normalizeNavbarLinksToComponents();
-      })
-      .catch(err => {
-        console.error('Navbar failed to load:', err);
-        // optionally show a small fallback UI in navbarContainer
-      });
+// dirnameFromPath + simple resolver fallback (kept but prefer new URL when possible)
+function dirnameFromPath(path) {
+  if (!path) return '';
+  return path.replace(/\/[^\/]*$/, '');
+}
+function resolveRelativeTo(fromDir, raw) {
+  if (!raw) return raw;
+  if (/^(https?:\/\/|\/\/|data:|mailto:|tel:|#)/i.test(raw)) return raw;
+  if (raw.startsWith('/')) return raw;
+  const base = fromDir || './';
+  try {
+    return new URL(raw, base).href;
+  } catch (e) {
+    const stack = (base + '/' + raw).split('/');
+    const out = [];
+    for (let i = 0; i < stack.length; i++) {
+      const part = stack[i];
+      if (part === '' || part === '.') continue;
+      if (part === '..') {
+        if (out.length) out.pop();
+        continue;
+      }
+      out.push(part);
+    }
+    return out.length ? './' + out.join('/') : './';
   }
+}
 
-  // Footer year
-  const year = document.getElementById('year');
-  if (year) year.textContent = new Date().getFullYear();
-});
+// This function will resolve using new URL (preferred) but fall back gracefully.
+function resolveWithBase(raw, baseUrl) {
+  if (!raw) return raw;
+  if (/^(https?:|\/\/|data:|mailto:|tel:|#)/i.test(raw)) return raw;
+  try { return new URL(raw, baseUrl).href; } catch(e) { return resolveRelativeTo(dirnameFromPath(baseUrl || ''), raw); }
+}
 
-/* =========================
-   Mobile menu toggling
-   ========================= */
+// Normalize images, styles, scripts inside the injected navbar fragment.
+// Ensures styles are appended to document head; resolves relative paths to the fetched base URL.
+function normalizeNavbarResources(navbarElement, navbarFetchUrl) {
+  if (!navbarElement || !navbarFetchUrl) return;
+  const head = document.head || document.getElementsByTagName('head')[0];
+
+  // images
+  navbarElement.querySelectorAll('img[src]').forEach(img => {
+    const raw = (img.getAttribute('src') || '').trim();
+    if (!raw) return;
+    if (/^(https?:\/\/|data:|\/\/)/i.test(raw)) return;
+    img.setAttribute('src', resolveWithBase(raw, navbarFetchUrl));
+  });
+
+  // styles: gather hrefs, remove link nodes from fragment, append resolved to document head
+  const cssHrefs = [];
+  navbarElement.querySelectorAll('link[rel="stylesheet"][href]').forEach(link => {
+    const raw = (link.getAttribute('href') || '').trim();
+    link.remove();
+    if (!raw) return;
+    if (/^(https?:\/\/|\/\/)/i.test(raw)) {
+      cssHrefs.push(raw);
+    } else {
+      cssHrefs.push(resolveWithBase(raw, navbarFetchUrl));
+    }
+  });
+  cssHrefs.forEach(href => {
+    if (document.querySelector(`link[href="${href}"]`)) return;
+    const l = document.createElement('link');
+    l.rel = 'stylesheet';
+    l.href = href;
+    head.appendChild(l);
+  });
+
+  // scripts: resolve relative src attributes so if later appended they will fetch correctly
+  navbarElement.querySelectorAll('script[src]').forEach(s => {
+    const raw = (s.getAttribute('src') || '').trim();
+    if (!raw) return;
+    if (/^(https?:\/\/|\/\/)/i.test(raw)) return;
+    s.setAttribute('src', resolveWithBase(raw, navbarFetchUrl));
+  });
+}
+
+// When a fragment contains inline <script> tags, setting innerHTML won't execute them.
+// This helper will find inline scripts and re-create them so they execute.
+function executeInlineScripts(container) {
+  const inlineScripts = [];
+  container.querySelectorAll('script').forEach(script => {
+    const src = script.getAttribute('src');
+    if (src) {
+      // skip external scripts here; they remain in DOM and will be handled if needed
+      return;
+    }
+    inlineScripts.push(script.textContent || script.innerText || '');
+    script.remove();
+  });
+  inlineScripts.forEach(code => {
+    const s = document.createElement('script');
+    s.type = 'text/javascript';
+    s.text = code;
+    document.body.appendChild(s);
+    // Optionally remove after execution
+    setTimeout(() => { document.body.removeChild(s); }, 0);
+  });
+}
+
+// init navbar interactive behaviors (hamburger toggle, click-outside)
 function initNavbarFunctions() {
   const hamburger = document.getElementById('hamburgerBtn');
   const navMenu = document.querySelector('.main-nav');
-
   if (hamburger && navMenu) {
     hamburger.addEventListener('click', (ev) => {
-      ev.stopPropagation(); // prevent immediate document click interference
+      ev.stopPropagation();
       navMenu.classList.toggle('open');
       const expanded = navMenu.classList.contains('open');
       hamburger.setAttribute('aria-expanded', String(expanded));
     });
   }
-
-  // close mobile nav when clicking outside
   document.addEventListener('click', (e) => {
     const nav = document.querySelector('.main-nav');
     const ham = document.getElementById('hamburgerBtn');
@@ -124,73 +240,77 @@ function initNavbarFunctions() {
   });
 }
 
-/* =========================
-   normalizeNavbarLinksToComponents()
-   Rewrites navbar links so that known page links point to:
-     <base>/components/<page>.html
-   Resource links (css/js/images) are rewritten to <base>/<path>
-   This function is defensive and preserves query/hash fragments.
-   ========================= */
-
-function normalizeNavbarLinksToComponents() {
-  const navbar = document.getElementById('navbar');
-  if (!navbar) return;
-
-  const anchors = navbar.querySelectorAll('a[href]');
-  if (!anchors || anchors.length === 0) return;
-
-  const base = computeBase(); // computed earlier
-  // Known page filenames that live inside website/components/
-  const pageFiles = new Set([
-    'login.html','signup.html','menu.html','profile.html','restaurants.html',
-    'contact.html','forget.html','dashboard.html','index.html','index'
-  ]);
-
-  anchors.forEach(a => {
-    const rawHref = a.getAttribute('href') || '';
-    // preserve full external links and mailto/tel and hash-only anchors
-    if (/^(https?:\/\/|mailto:|tel:|#)/i.test(rawHref)) return;
-
-    // split off query/hash to preserve them when rewriting
-    let [hrefWithoutHash, hashAndQuery] = rawHref.split(/(#|\?)/, 2).reduce((acc, part, idx, arr) => {
-      // this is a little manual: we want to preserve ?... and #... exactly
-      return idx === 0 ? [part, arr.slice(1).join('')] : acc;
-    }, [rawHref, '']);
-    // Simpler approach: use URL when possible (but relative URLs need base)
-    // We'll normalize path manually:
-    let cleaned = hrefWithoutHash.replace(/^\.?\//, '').replace(/^\/+/, '');
-
-    // If empty -> treat as index
-    if (cleaned === '' || cleaned.toLowerCase() === 'index' || cleaned === 'index.html') {
-      const newHref = base ? `${base}/index.html` : './index.html';
-      a.setAttribute('href', newHref + (hashAndQuery ? hashAndQuery : ''));
-      return;
+// Try an array of possible paths; return first successful response.text() + res.url
+async function fetchFirst(paths = []) {
+  for (const p of paths) {
+    try {
+      const res = await fetch(p);
+      if (res && res.ok) {
+        const html = await res.text();
+        return { html, baseUrl: res.url };
+      }
+    } catch (e) {
+      // try next
     }
-
-    const parts = cleaned.split('/');
-    const basename = parts[parts.length - 1];
-
-    // If basename is a known page file (with or w/o .html)
-    if (pageFiles.has(basename.toLowerCase())) {
-      // ensure .html extension if necessary
-      const nameWithExt = basename.toLowerCase().endsWith('.html') ? basename : `${basename}.html`;
-      const newHref = base ? `${base}/components/${nameWithExt}` : `./components/${nameWithExt}`;
-      a.setAttribute('href', newHref + (hashAndQuery ? hashAndQuery : ''));
-      return;
-    }
-
-    // Otherwise treat as resource and keep path under base (preserve nested folders)
-    const resourceHref = base ? `${base}/${cleaned}` : `./${cleaned}`;
-    a.setAttribute('href', resourceHref + (hashAndQuery ? hashAndQuery : ''));
-  });
+  }
+  throw new Error('None of the navbar paths worked');
 }
 
-/* =========================
-   Expose helpers globally
-   ========================= */
-window.sfHelpers = {
-  showMessage,
-  clearMessage,
-  validateEmail,
-  validatePhone
-};
+// Determine candidate navbar paths to try based on current location
+function candidateNavbarPaths() {
+  // common candidates (relative + absolute-ish)
+  const candidates = [
+    './components/navbar/navbar.html',
+    'components/navbar/navbar.html',
+    './navbar/navbar.html',
+    './components/navbar.html',
+    '/website/components/navbar/navbar.html',
+    '/components/navbar/navbar.html'
+  ];
+  return candidates;
+}
+
+// Main loader: fetch, inject, normalize, init
+window.addEventListener('DOMContentLoaded', async () => {
+  const navbarContainer = document.getElementById('navbar');
+  if (!navbarContainer) return;
+
+  try {
+    const candidates = candidateNavbarPaths();
+    const { html, baseUrl } = await fetchFirst(candidates);
+    // create a temp container to parse safely
+    const temp = document.createElement('div');
+    temp.innerHTML = html;
+
+    // normalize resource references in the fragment
+    normalizeNavbarResources(temp, baseUrl);
+
+    // move parsed fragment into actual container
+    navbarContainer.innerHTML = temp.innerHTML;
+
+    // execute inline scripts that were in the fragment
+    executeInlineScripts(navbarContainer);
+
+    // normalize links to component pages (this logic depends on your site layout)
+    normalizeNavbarLinksToComponents();
+
+    // init UI behaviors (hamburger, click-close)
+    initNavbarFunctions();
+  } catch (err) {
+    console.error('Navbar load error:', err);
+    // Optionally inform users visually:
+    // showMessage(document.getElementById('someMsgEl'), 'Navbar failed to load', 'error');
+  }
+
+  // year in footer
+  const year = document.getElementById('year');
+  if (year) year.textContent = new Date().getFullYear();
+
+  // expose helpers if other scripts need them
+  window.sfHelpers = {
+    showMessage,
+    clearMessage,
+    validateEmail,
+    validatePhone
+  };
+});

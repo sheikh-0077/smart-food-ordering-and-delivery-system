@@ -1,23 +1,19 @@
-/* ===========================
-   contact.css
-   Styles for contact page
-   =========================== */
+/* Contact page styles (based on your provided CSS) */
 
-/* ===== Theme variables ===== */
 :root{
-  --bg: #f8f9fb;
+  --bg: #f6f7f9;
   --text: #111827;
   --muted: #6b7280;
   --card: #ffffff;
-  --brand: #ff6b00;        /* brand color used for focus/accents */
-  --border: #e6e9ee;
-  --radius: 14px;
-  --shadow: 0 6px 18px rgba(17,24,39,0.06);
-  --container-max: 1200px;
-  --gap: 2rem;
+  --brand: #ff6b1a;
+  --radius: 12px;
+  --shadow: 0 10px 30px rgba(11,12,13,0.06);
+  --border: #e6e7ea;
+  --container-max: 1100px;
+  --gap: 1.75rem;
 }
 
-/* ===== Page base ===== */
+/* page base */
 body.contact-page{
   background: var(--bg);
   color: var(--text);
@@ -29,18 +25,17 @@ body.contact-page{
   padding: 2.25rem 1.25rem;
 }
 
-/* Centered page container */
 .contact-container{
   max-width: var(--container-max);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 1fr 360px; /* main form + aside */
+  grid-template-columns: 1fr 360px;
   gap: var(--gap);
   align-items: start;
   padding-bottom: 3rem;
 }
 
-/* ===== Shared card utility ===== */
+/* cards */
 .card{
   background: var(--card);
   padding: 1.5rem;
@@ -49,9 +44,7 @@ body.contact-page{
   border: 1px solid var(--border);
 }
 
-/* ===== Contact card (form) ===== */
 .contact-card.card{
-  /* ensure form column is roomy */
   min-height: 320px;
 }
 
@@ -66,7 +59,6 @@ body.contact-page{
   margin-top: 1rem;
 }
 
-/* Label + inputs */
 .contact-card label{
   display: block;
   font-weight: 600;
@@ -95,7 +87,6 @@ body.contact-page{
   color: var(--muted);
 }
 
-/* Focus states (visible and accessible) */
 .contact-card input:focus,
 .contact-card textarea:focus{
   outline: none;
@@ -103,7 +94,6 @@ body.contact-page{
   box-shadow: 0 0 0 4px rgba(255,107,0,0.12);
 }
 
-/* Textarea specifics */
 .contact-card textarea{
   resize: vertical;
   min-height: 120px;
@@ -111,7 +101,6 @@ body.contact-page{
   line-height: 1.4;
 }
 
-/* Button */
 .contact-card .btn{
   display: inline-block;
   margin-top: 1rem;
@@ -126,20 +115,24 @@ body.contact-page{
   transition: transform 120ms ease, box-shadow 120ms ease, opacity 120ms ease;
 }
 
-.contact-card .btn:active{ transform: translateY(1px); }
-.contact-card .btn:focus{ box-shadow: 0 0 0 4px rgba(255,107,0,0.18); outline: none; }
+.contact-card .btn:active{
+  transform: translateY(1px);
+}
 
-/* message area */
+.contact-card .btn:focus{
+  box-shadow: 0 0 0 4px rgba(255,107,0,0.18);
+  outline: none;
+}
+
 #contactMsg{
   margin-top: 0.75rem;
   font-size: 0.95rem;
   color: var(--muted);
 }
 
-/* ===== Contact info (aside) ===== */
 .contact-info.card{
   position: sticky;
-  top: 2.25rem; /* so it sticks a bit on large screens */
+  top: 2.25rem;
 }
 
 .contact-info h3{
@@ -154,20 +147,21 @@ body.contact-page{
   font-size: 0.95rem;
 }
 
-/* link styles inside aside */
 .contact-info a{
   text-decoration: none;
   color: var(--brand);
   font-weight: 600;
 }
-.contact-info a:hover{ text-decoration: underline; }
 
-/* ===== Muted helper class used in HTML */
+.contact-info a:hover{
+  text-decoration: underline;
+}
+
 .muted{
   color: var(--muted);
 }
 
-/* ===== Responsive rules ===== */
+/* responsive */
 @media (max-width: 1100px){
   .contact-container{
     grid-template-columns: 1fr 320px;
@@ -177,7 +171,6 @@ body.contact-page{
 }
 
 @media (max-width: 900px){
-  /* stack into single column */
   .contact-container{
     grid-template-columns: 1fr;
     padding: 1rem;
@@ -189,7 +182,6 @@ body.contact-page{
     margin-top: 1.25rem;
   }
 
-  /* expand aside to full width */
   .contact-card.card,
   .contact-info.card{
     padding: 1.25rem;
@@ -200,7 +192,6 @@ body.contact-page{
   }
 }
 
-/* small touch adjustments */
 @media (max-width: 420px){
   .contact-card input,
   .contact-card textarea{
@@ -213,3 +204,19 @@ body.contact-page{
     font-size: 1rem;
   }
 }
+/* center footer text and remove default margins */
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* centers horizontally */
+  padding: 1.5rem 0;
+  margin-top: 3rem;
+  background: transparent; /* keep as-is, change if you want a background */
+  box-sizing: border-box;
+}
+
+.site-footer p {
+  margin: 0;            /* remove default margin so it's perfectly centered */
+  text-align: center;   /* defensive: ensure multilines are centered */
+}
+

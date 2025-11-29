@@ -1,5 +1,3 @@
-/* PROFILE PAGE — CLEANED, MODERN & RESPONSIVE */
-
 :root {
   --brand: #ff6b00;
   --text: #111827;
@@ -29,7 +27,6 @@ body.profile-page {
   color: var(--text);
 }
 
-/* PROFILE CARD */
 .profile-card {
   padding: 1.5rem;
   border-radius: var(--radius);
@@ -64,7 +61,6 @@ body.profile-page {
   outline: none;
 }
 
-/* BUTTONS */
 .btn {
   padding: 0.7rem 1.2rem;
   border-radius: 10px;
@@ -89,7 +85,6 @@ body.profile-page {
   background: #f3f4f6;
 }
 
-/* MESSAGE BOX */
 #profileMsg {
   margin-top: 1rem;
   font-size: 0.95rem;
@@ -97,7 +92,6 @@ body.profile-page {
   color: var(--muted);
 }
 
-/* RESPONSIVE FIX */
 @media (max-width: 600px) {
   .profile-card {
     padding: 1rem;

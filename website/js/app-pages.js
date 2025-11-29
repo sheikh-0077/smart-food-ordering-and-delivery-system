@@ -1,8 +1,18 @@
+const {
+  showMessage = () => {},
+  clearMessage = () => {},
+  validateEmail = () => false,
+  validatePhone = () => false
+} = window.sfHelpers || {};
 
+function sitePrefix() {
+  const parts = window.location.pathname.split('/').filter(Boolean);
+  const compIdx = parts.indexOf('components');
+  if (compIdx === -1) return './';
+  const depth = parts.length - compIdx;
+  return '../'.repeat(Math.max(0, depth - 1)) || './';
+}
 
-import { showMessage, clearMessage, validateEmail, validatePhone } from "./main.js";
-
-// Wait for DOM
 window.addEventListener("DOMContentLoaded", () => {
   handleLoginPage();
   handleSignupPage();
@@ -11,7 +21,6 @@ window.addEventListener("DOMContentLoaded", () => {
   handleMenuPage();
   handleDashboardPage();
 });
-
 
 function handleLoginPage() {
   const form = document.getElementById("loginForm");
@@ -41,9 +50,10 @@ function handleLoginPage() {
       return;
     }
 
-    // Simulated login
     showMessage(msg, "Login successful! Redirecting...", "success");
-    setTimeout(() => (window.location.href = "dashboard.html"), 1000);
+    setTimeout(() => {
+      window.location.href = `${sitePrefix()}components/dashboard/dashboard.html`;
+    }, 1000);
   });
 }
 
@@ -89,7 +99,9 @@ function handleSignupPage() {
     }
 
     showMessage(msg, "Account created successfully! Redirecting...", "success");
-    setTimeout(() => (window.location.href = "login.html"), 1000);
+    setTimeout(() => {
+      window.location.href = `${sitePrefix()}components/login/login.html`;
+    }, 1000);
   });
 }
 
@@ -99,60 +111,67 @@ function handleProfilePage() {
 
   const msg = document.getElementById("profileMsg");
 
-  document.getElementById("saveProfile").onclick = () => {
-    clearMessage(msg);
+  const saveBtn = document.getElementById("saveProfile");
+  if (saveBtn) {
+    saveBtn.onclick = () => {
+      clearMessage(msg);
 
-    const name = form.fullname.value.trim();
-    const email = form.email.value.trim();
-    const phone = form.phone.value.trim();
-    const address = form.address.value.trim();
+      const name = form.fullname.value.trim();
+      const email = form.email.value.trim();
+      const phone = form.phone.value.trim();
+      const address = form.address.value.trim();
 
-    if (!name || !email || !phone || !address) {
-      showMessage(msg, "Please fill out all fields.", "error");
-      return;
-    }
+      if (!name || !email || !phone || !address) {
+        showMessage(msg, "Please fill out all fields.", "error");
+        return;
+      }
 
-    if (!validateEmail(email)) {
-      showMessage(msg, "Invalid email.", "error");
-      return;
-    }
+      if (!validateEmail(email)) {
+        showMessage(msg, "Invalid email.", "error");
+        return;
+      }
 
-    if (!validatePhone(phone)) {
-      showMessage(msg, "Invalid phone.", "error");
-      return;
-    }
+      if (!validatePhone(phone)) {
+        showMessage(msg, "Invalid phone.", "error");
+        return;
+      }
 
-    showMessage(msg, "Profile saved successfully!", "success");
-  };
+      showMessage(msg, "Profile saved successfully!", "success");
+    };
+  }
 
-  document.getElementById("cancelProfile").onclick = () => {
-    form.reset();
-    clearMessage(msg);
-  };
+  const cancelBtn = document.getElementById("cancelProfile");
+  if (cancelBtn) {
+    cancelBtn.onclick = () => {
+      form.reset();
+      clearMessage(msg);
+    };
+  }
 }
-
 
 function handleRestaurantsPage() {
   const list = document.getElementById("restaurantsList");
   if (!list) return;
 
+  const prefix = sitePrefix();
+
   const restaurants = [
     {
       name: "Pizza House",
       cuisine: "Italian",
-      img: "../assets/images/pizza.jpg",
+      img: `${prefix}assets/images/pizza.jpg`,
       desc: "Hot wood-fired pizzas & pasta."
     },
     {
       name: "Mo:Mo Legend",
       cuisine: "Asian",
-      img: "../assets/images/momo.jpg",
+      img: `${prefix}assets/images/momo.jpg`,
       desc: "Nepal's favorite steamed & fried MoMo."
     },
     {
       name: "Burger Hub",
       cuisine: "Fast Food",
-      img: "../assets/images/burger.jpg",
+      img: `${prefix}assets/images/burger.jpg`,
       desc: "Juicy grilled burgers with fries."
     }
   ];
@@ -165,7 +184,7 @@ function handleRestaurantsPage() {
         <h3>${r.name}</h3>
         <p>${r.desc}</p>
         <div class="actions">
-          <button class="btn primary small" onclick="location.href='menu.html?res=${r.name}'">View Menu</button>
+          <button class="btn primary small" onclick="location.href='${prefix}components/menu/menu.html?res=${encodeURIComponent(r.name)}'">View Menu</button>
         </div>
       </div>`
     )
@@ -181,11 +200,12 @@ function handleMenuPage() {
   const checkoutBtn = document.getElementById("checkoutBtn");
 
   let cart = [];
+  const prefix = sitePrefix();
 
   const menu = [
-    { name: "Veg Pizza", price: 450, img: "../assets/images/pizza1.jpg" },
-    { name: "Chicken Burger", price: 380, img: "../assets/images/burger.jpg" },
-    { name: "Fried Mo:Mo", price: 250, img: "../assets/images/momo.jpg" }
+    { name: "Veg Pizza", price: 450, img: `${prefix}assets/images/pizza1.jpg` },
+    { name: "Chicken Burger", price: 380, img: `${prefix}assets/images/burger.jpg` },
+    { name: "Fried Mo:Mo", price: 250, img: `${prefix}assets/images/momo.jpg` }
   ];
 
   menuList.innerHTML = menu
@@ -208,6 +228,8 @@ function handleMenuPage() {
   };
 
   function renderCart() {
+    if (!cartItems || !cartTotal || !checkoutBtn) return;
+
     if (cart.length === 0) {
       cartItems.textContent = "No items yet.";
       checkoutBtn.disabled = true;
@@ -216,14 +238,10 @@ function handleMenuPage() {
     }
 
     checkoutBtn.disabled = false;
-    cartItems.innerHTML = cart
-      .map((c) => `<p>${c.name} — NPR ${c.price}</p>`)
-      .join("");
-
+    cartItems.innerHTML = cart.map((c) => `<p>${c.name} — NPR ${c.price}</p>`).join("");
     cartTotal.textContent = cart.reduce((t, i) => t + i.price, 0);
   }
 }
-
 
 function handleDashboardPage() {
   const nameEl = document.getElementById("userName");

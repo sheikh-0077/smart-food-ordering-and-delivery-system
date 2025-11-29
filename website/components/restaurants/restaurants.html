@@ -1,32 +1,23 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Restaurants — Smart Food</title>
-
-
-  <link rel="stylesheet" href="../css/restaurants.css">
-
-
-  <!-- JS -->
-  <script src="../js/main.js" defer></script>
-  <script src="../js/app-pages.js" defer></script>
+  <link rel="stylesheet" href="restaurants.css">
+  <script src="../../js/main.js" defer></script>
+  <script src="../../js/app-pages.js" defer></script>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
   <div id="navbar"></div>
 
-  <!-- MAIN CONTENT -->
   <main class="container" style="padding:2rem 0">
     <h2>Restaurants</h2>
 
-    <!-- FILTERS -->
     <div class="filters">
       <input id="search" placeholder="Search restaurants or cuisine">
-
       <select id="cuisine">
         <option value="">All cuisines</option>
         <option>Asian</option>
@@ -35,16 +26,12 @@
       </select>
     </div>
 
-    <!-- RESTAURANTS GRID -->
-    <div class="grid" id="restaurantsList">
-      <!-- Cards loaded by JS (app-pages.js) -->
-    </div>
+    <div class="grid" id="restaurantsList"></div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="site-footer">
-    <p>© <span id="year"></span> Smart Food — All rights reserved.</p>
-  </footer>
+  <p>© <span id="year"></span> Smart Food — All rights reserved.</p>
+</footer>
 
   <script>
     document.getElementById("year").textContent = new Date().getFullYear();

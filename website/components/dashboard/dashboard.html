@@ -1,47 +1,38 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Dashboard — Smart Food</title>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="../css/dashboard.css">
-
-  <!-- JS -->
-  <script src="../js/main.js" defer></script>
-  <script src="../js/app-pages.js" defer></script>
+  <link rel="stylesheet" href="dashboard.css">
+  <script src="../../js/main.js" defer></script>
+  <script src="../../js/app-pages.js" defer></script>
 </head>
 
 <body class="app-page">
 
-  <!-- NAVBAR -->
   <div id="navbar"></div>
 
-  <!-- DASHBOARD MAIN CONTENT -->
   <main class="container dashboard-container">
 
-    <!-- SIDEBAR -->
     <aside class="dashboard-side">
       <div class="card profile-summary">
-        <img src="/assets/images/logo.png" alt="avatar" class="avatar">
+        <img src="../../assets/images/logo.png" alt="avatar" class="avatar">
         <h3 id="userName">Hello, Guest</h3>
         <p id="userEmail">guest@example.com</p>
 
         <nav class="side-nav">
-          <a href="/html/dashboard.html" class="active">Overview</a>
-          <a href="/html/profile.html">Account</a>
-          <a href="/html/restaurants.html">Order Food</a>
-          <a href="/html/contact.html">Support</a>
+          <a href="../dashboard/dashboard.html" class="active">Overview</a>
+          <a href="../profile/profile.html">Account</a>
+          <a href="../restaurants/restaurants.html">Order Food</a>
+          <a href="../contact/contact.html">Support</a>
         </nav>
       </div>
     </aside>
 
-    <!-- DASHBOARD CONTENT -->
     <section class="dashboard-main">
       <h2>Overview</h2>
 
-      <!-- STATS GRID -->
       <div class="stats-grid">
         <div class="stat card">
           <h4>Active Orders</h4>
@@ -59,7 +50,6 @@
         </div>
       </div>
 
-      <!-- RECENT ORDERS -->
       <div class="recent-orders card">
         <h3>Recent Orders</h3>
         <div id="recentList">
@@ -70,7 +60,6 @@
 
   </main>
 
-  <!-- FOOTER -->
   <footer class="site-footer">
     <p>© <span id="year"></span> Smart Food — All rights reserved.</p>
   </footer>

@@ -3,28 +3,15 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="Smart Food — Online Food Ordering & Delivery in Nepal">
   <title>Smart Food — Home</title>
-
-  <!-- Global CSS -->
-  <link rel="stylesheet" href="./css/style.css">
-
-  <!-- JS -->
+  <link rel="stylesheet" href="./style.css">
   <script src="./js/main.js" defer></script>
-  <script src="./js/app-pages.js" defer></script>
 </head>
 <body>
-  <!-- Navbar Component Injected -->
+  <!-- Navbar will be injected here -->
   <div id="navbar"></div>
 
-      <!-- Mobile Menu Button -->
-      <button class="hamburger" aria-label="Menu" id="hamburgerBtn">☰</button>
-    </div>
-
-  <!-- MAIN CONTENT -->
   <main>
-
-    <!-- HERO SECTION -->
     <section class="hero container" id="home">
       <div class="hero-text">
         <h1>Delicious meals — ordered <strong>faster</strong>, delivered <strong>hot</strong>.</h1>
@@ -40,83 +27,61 @@
       </div>
 
       <div class="hero-image">
-        <img
-          src="./assets/hero-illustration.png"
-          class="hero-illustration"
-          alt="Delivery illustration"
-          loading="lazy"
-        >
+        <img src="assets/hero-illustration.png" class="hero-illustration" alt="Delivery illustration" loading="lazy">
       </div>
     </section>
 
-    <!-- SERVICES SECTION -->
     <section id="services" class="container services-section">
       <h2>Our Services</h2>
 
       <div class="services-grid">
         <article class="service">
-          <img src="./assets/online-ordering.png" alt="Online Ordering" width="90">
+          <img src="assets/online-ordering.png" alt="Online Ordering" width="90">
           <h3>Online Ordering</h3>
           <p>Browse menus, add items to your cart, and check out securely.</p>
         </article>
 
         <article class="service">
-          <img src="./assets/fast-delivery.png" alt="Fast Delivery" width="90">
+          <img src="assets/fast-delivery.png" alt="Fast Delivery" width="90">
           <h3>Fast Delivery</h3>
           <p>Optimized routing and live GPS tracking ensure fast and hot orders.</p>
         </article>
 
         <article class="service">
-          <img src="./assets/bulk-ordering.png" alt="Bulk Orders" width="90">
+          <img src="assets/bulk-ordering.png" alt="Bulk Orders" width="90">
           <h3>Bulk Orders</h3>
           <p>Perfect for parties, events, and large group meals with special pricing.</p>
         </article>
       </div>
     </section>
 
-    
-    <!-- ORDER SECTION -->
     <section id="order" class="container order-section">
       <h2>Order Your Favorite Food</h2>
       <p>Coming soon — deliciousness on the way! 😋</p>
     </section>
 
-    <!-- ABOUT SECTION -->
-   <section id="about" class="container about-section">
-  <div class="about-wrap">
-    <div class="about-image">
-      <img
-        src="./assets/about-illus.png"
-        alt="Plate of food on wooden table"
-        loading="lazy"
-        decoding="async"
-      />
-    </div>
+    <section id="about" class="container about-section">
+      <div class="about-wrap">
+        <div class="about-image">
+          <img src="assets/about-illus.png" alt="Plate of food on wooden table" loading="lazy" decoding="async">
+        </div>
 
-    <div class="about-text">
-      <h2>About Smart Food</h2>
-      <p>
-        We connect local restaurants with hungry customers across Nepal.
-        Fast, lightweight, and built for performance and scale.
-      </p>
-      <p>
-        <a href="./components/contact.html" class="btn">Contact Us</a>
-      </p>
-    </div>
-  </div>
-</section>
-
-
+        <div class="about-text">
+          <h2>About Smart Food</h2>
+          <p>
+            We connect local restaurants with hungry customers across Nepal.
+            Fast, lightweight, and built for performance and scale.
+          </p>
+          <p>
+            <a href="./components/contact/contact.html" class="btn">Contact Us</a>
+          </p>
+        </div>
+      </div>
+    </section>
   </main>
 
-  <!-- FOOTER -->
   <footer class="site-footer">
     <p>© <span id="year"></span> Smart Food — All rights reserved.</p>
   </footer>
-
-  <script>
-    document.getElementById("year").textContent = new Date().getFullYear();
-  </script>
-
 </body>
 </html>

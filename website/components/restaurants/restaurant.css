@@ -1,5 +1,3 @@
-/* RESTAURANTS PAGE — CLEANED & RESPONSIVE */
-
 :root {
   --brand: #ff6b00;
   --text: #111827;
@@ -23,7 +21,6 @@ body {
   padding: 1rem;
 }
 
-/* FILTER BAR */
 .filters {
   display: flex;
   gap: 0.8rem;
@@ -49,14 +46,12 @@ body {
   outline: none;
 }
 
-/* RESTAURANT GRID */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.2rem;
 }
 
-/* RESTAURANT CARD */
 .card {
   background: var(--card);
   padding: 1rem;
@@ -112,10 +107,16 @@ body {
   filter: brightness(1.08);
 }
 
-/* RESPONSIVE FIX */
-@media (max-width: 520px) {
-  .filters input,
-  .filters select {
-    max-width: 100%;
-  }
+
+
+.footer site-footer {
+  width: 100%;
+  padding: 1.5rem 0;
+  text-align: center;
+  margin-top: 3rem;
+  color: var(--muted);
+}
+
+.footer site-footer p {
+  margin: 0;
 }

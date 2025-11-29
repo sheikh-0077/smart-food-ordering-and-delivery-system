@@ -1,0 +1,153 @@
+:root{
+  --brand: #ff6b00;
+  --text: #111827;
+  --muted: #6b7280;
+  --card: #ffffff;
+  --radius: 12px;
+  --shadow: 0 8px 20px rgba(0,0,0,0.05);
+  --border: #e6e9ef;
+}
+
+/* page baseline: full-height so footer can be pinned */
+html, body {
+  height: 100%;
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background: #f7f8fb;
+  color: var(--text);
+}
+
+/* layout root */
+body.login-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* main grows so footer is pushed to bottom */
+main {
+  flex: 1 0 auto;
+}
+
+/* --- Responsive container --- 
+   Keeps content centered horizontally, but does NOT fix width across all viewports.
+*/
+.container {
+  width: 100%;           /* fill available space */
+  max-width: 1200px;     /* nice readable max on very large screens */
+  margin: 0 auto;        /* center container */
+  padding: 0 1rem;       /* side padding for small screens */
+  box-sizing: border-box;
+}
+
+/* center horizontally, slightly below top vertically (like your screenshot) */
+.login-main {
+  display: flex;
+  justify-content: center;    /* center horizontally */
+  align-items: flex-start;    /* start vertically so card sits just below navbar */
+  padding: 3.25rem 0;         /* top spacing controls vertical offset */
+  min-height: calc(100vh - 120px); /* ensure footer stays pinned on short pages */
+}
+
+/* constrain the card so it never stretches too wide */
+.login-card {
+  width: 100%;
+  max-width: 500px;   /* ⬅ increase width (was 420px) */
+  min-height: 480px;  /* ⬅ increase card height */
+  box-sizing: border-box;
+
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 2rem 2rem;  /* ⬅ increased padding for more height */
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+
+/* typography */
+.login-card h1 {
+  margin: 0 0 1rem 0;
+  font-size: 1.6rem;
+  line-height: 1.2;
+}
+
+/* form labels & inputs */
+.form label {
+  display: block;
+  margin-top: 0.8rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.form input[type="text"],
+.form input[type="password"] {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  margin-top: 0.35rem;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+/* password toggle wrapper */
+.pw-wrap { position: relative; }
+
+.toggle-pw {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--brand);
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+/* small row */
+.form-row.horizontal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.8rem;
+  gap: 1rem;
+}
+
+/* submit button full width */
+.btn.primary.full {
+  width: 100%;
+  background: var(--brand);
+  color: #fff;
+  padding: 0.85rem;
+  border-radius: 10px;
+  margin-top: 1rem;
+  cursor: pointer;
+  font-weight: 700;
+  border: none;
+}
+
+/* cta */
+.signup-cta { margin-top: 0.9rem; font-size: 0.95rem; }
+
+/* message area */
+.form-message {
+  margin-top: 1rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+
+/* Footer styles */
+.site-footer {
+  width: 100%;
+  padding: 1.25rem 0;
+  text-align: center;
+  margin-top: 2rem;
+  color: var(--muted);
+  box-sizing: border-box;
+}
+
+.site-footer p { margin: 0; }
+

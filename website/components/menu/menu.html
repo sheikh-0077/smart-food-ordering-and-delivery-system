@@ -1,51 +1,35 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Menu — Smart Food</title>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="../css/menu.css">
-
-  <!-- JS -->
-  <script src="../js/main.js" defer></script>
-  <script src="../js/app-pages.js" defer></script>
+  <link rel="stylesheet" href="menu.css">
+  <script src="../../js/main.js" defer></script>
+  <script src="../../js/app-pages.js" defer></script>
 </head>
 
 <body>
 
-  <!-- NAVBAR -->
   <div id="navbar"></div>
 
-
-  <!-- MAIN SECTION -->
   <main class="container" style="padding:2rem 0">
     <h2 id="menuTitle">Restaurant Menu</h2>
 
     <div class="menu-grid">
+      <div class="menu-list" id="menuList"></div>
 
-      <!-- MENU ITEMS LIST -->
-      <div class="menu-list" id="menuList">
-        <!-- Menu items injected via app-pages.js -->
-      </div>
-
-      <!-- CART SIDEBAR -->
       <aside class="cart card">
         <h3>Your Order</h3>
-
         <div id="cartItems">No items yet.</div>
-
         <div class="cart-total">
           <strong>Total:</strong> NPR <span id="cartTotal">0</span>
         </div>
-
         <button id="checkoutBtn" class="btn primary full" disabled>Checkout</button>
       </aside>
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="site-footer">
     <p>© <span id="year"></span> Smart Food — All rights reserved.</p>
   </footer>

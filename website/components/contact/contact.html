@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Contact — Smart Food</title>
+
+  <!-- Main site styles (keeps visual consistency) -->
+  <link rel="stylesheet" href="../../style.css">
+
+  <!-- Contact-specific styles -->
+  <link rel="stylesheet" href="contact.css">
+
+  <!-- Scripts: main loader is referenced relatively so it works
+       whether this fragment is opened directly or injected. -->
+  <script src="../../js/main.js" defer></script>
+  <script src="../../js/app-pages.js" defer></script>
+</head>
+
+<body class="contact-page">
+
+  <!-- Navbar (will be injected by main.js) -->
+  <div id="navbar"></div>
+
+  <main class="contact-container">
+
+    <section class="contact-card card">
+      <h2>Get in Touch</h2>
+
+      <form id="contactForm" novalidate>
+        <label for="cname">Full Name</label>
+        <input id="cname" name="cname" placeholder="Your full name" required>
+
+        <label for="cemail">Email</label>
+        <input id="cemail" name="cemail" type="email" placeholder="you@example.com" required>
+
+        <label for="cphone">Phone</label>
+        <input id="cphone" name="cphone" placeholder="+977-98XXXXXXXX" required>
+
+        <label for="cmsg">Message</label>
+        <textarea id="cmsg" name="cmsg" rows="4" placeholder="Write your message here..." required></textarea>
+
+        <button class="btn" type="submit">Send Message</button>
+
+        <div id="contactMsg" class="muted" style="margin-top:0.8rem"></div>
+      </form>
+    </section>
+
+    <aside class="contact-info card">
+      <h3>Contact Information</h3>
+      <p><strong>Email:</strong> support@smartfood.com</p>
+      <p><strong>Phone:</strong> +977-9812345678</p>
+      <p><strong>Address:</strong><br> Kathmandu, Nepal</p>
+      <p><strong>Follow us:</strong></p>
+      <p>
+        <a href="#">Facebook</a> ·
+        <a href="#">Instagram</a> ·
+        <a href="#">TikTok</a>
+      </p>
+    </aside>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Smart Food — All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Set year (kept here so page works when opened directly)
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Robust form handling
+    (function(){
+      const form = document.getElementById("contactForm");
+      const msgBox = document.getElementById("contactMsg");
+      const nameEl = document.getElementById("cname");
+      const emailEl = document.getElementById("cemail");
+      const phoneEl = document.getElementById("cphone");
+      const msgEl = document.getElementById("cmsg");
+
+      function showLocalMessage(text, type = "info") {
+        msgBox.style.color = (type === "error") ? "#842029" : "#0f5132";
+        msgBox.textContent = text;
+      }
+
+      form.addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        const name = nameEl.value.trim();
+        const email = emailEl.value.trim();
+        const phone = phoneEl.value.trim();
+        const message = msgEl.value.trim();
+
+        if (!name || !email || !phone || !message) {
+          showLocalMessage("Please fill all fields.", "error");
+          return;
+        }
+
+        // Use sfHelpers validators if available (from main.js). Fallback to simple checks.
+        const validators = window.sfHelpers || {};
+        const isEmailValid = typeof validators.validateEmail === 'function'
+          ? validators.validateEmail(email)
+          : /\S+@\S+\.\S+/.test(email);
+
+        const isPhoneValid = typeof validators.validatePhone === 'function'
+          ? validators.validatePhone(phone)
+          : /^\+?[0-9\-\s]{7,15}$/.test(phone);
+
+        if (!isEmailValid) {
+          showLocalMessage("Please enter a valid email address.", "error");
+          return;
+        }
+        if (!isPhoneValid) {
+          showLocalMessage("Please enter a valid phone number.", "error");
+          return;
+        }
+
+        // Demo success (replace with real submit / fetch to API)
+        showLocalMessage("Message sent successfully! (demo)", "success");
+        form.reset();
+      });
+    })();
+  </script>
+
+</body>
+</html>
